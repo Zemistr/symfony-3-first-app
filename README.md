@@ -1,4 +1,4 @@
-#Symfonycz4 - First app on Symfony 3 Standard Edition
+Symfonycz4 - First app on Symfony 3 Standard Edition
 ===================================================
 
 Welcome to the Symfony Standard Edition - a fully-functional Symfony
