@@ -1,0 +1,61 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-center">
+          <img src="{{ asset('bundles/framework/images/female.jpg') }}?1" class="img-responsive">
+          <br>
+          <h3>Dámské tričko ({{ female_form.vars.data.price }} Kč/ks)</h3>
+          {{ form(female_form) }}
+        </div>
+        <div class="col-xs-12 col-sm-6 text-center">
+          <img src="{{ asset('bundles/framework/images/male.jpg') }}?1" class="img-responsive">
+          <br>
+          <h3>Pánské tričko ({{ male_form.vars.data.price }} Kč/ks)</h3>
+          {{ form(male_form) }}
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <h2>Obsah košíku</h2>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Název</th>
+            <th>Velikost</th>
+            <th>Cena</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if app.session.get('cart').items is defined and app.session.get('cart').items %}
+            {% for sku, item in app.session.get('cart').items %}
+              {% for size_key, size in item.sizes %}
+                <tr>
+                  <td>{{ item.title }}</td>
+                  <td>{{ size.title }}</td>
+                  <td>{{ size.quantity }} * {{ item.price }} Kč = <strong>{{ item.price * size.quantity }} Kč</strong></td>
+                </tr>
+              {% endfor %}
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="3">Košík je prázdný</td>
+            </tr>
+          {% endif %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td><strong>Celkem</strong></td>
+            <td><strong>{{ app.session.get('cart').total is defined ? app.session.get('cart').total : 0 }} Kč</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <a href="{{ path('cart') }}" role="button" class="btn btn-primary">Přejít do košíku</a>
+    </div>
+  </div>
+{% endblock %}

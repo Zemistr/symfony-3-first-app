@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+  </head>
+  <body>
+    <strong>Děkujeme Vám za objednávku!</strong><br>
+    <br>
+    Souhrn objednávky:<br>
+    <strong>Jméno a příjmení:</strong> {{ name }}<br>
+    <strong>Email:</strong> {{ email }}<br>
+    <strong>Poznámka:</strong> <pre>{{ note }}</pre><br>
+    <br>
+    <table style="border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="border-bottom: 1px solid #ccc">Název</th>
+          <th style="border-bottom: 1px solid #ccc">Velikost</th>
+          <th style="border-bottom: 1px solid #ccc">Cena</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sku, item in cart.items %}
+          {% for size_key, size in item.sizes %}
+            <tr>
+              <td style="padding: 5px; border-bottom: 1px solid #ccc">{{ item.title }}</td>
+              <td style="padding: 5px; border-bottom: 1px solid #ccc">{{ size.title }}</td>
+              <td style="padding: 5px; border-bottom: 1px solid #ccc">{{ size.quantity }} * {{ item.price }} Kč = <strong>{{ item.price * size.quantity }} Kč</strong></td>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td style="padding: 5px; border-bottom: 1px solid #ccc;" colspan="4">&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td style="padding: 5px"><strong>Celkem</strong></td>
+          <td style="padding: 5px"><strong>{{ cart.total }} Kč</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+    <br>
+    <br>
+    <strong>Tričko Vám bude předáno na dalším Symfony srazu kde zároveň dojde i k platbě v hotovosti. :)</strong>
+    <br>
+    <br>
+    S pozdravem<br>
+    Symfony.cz Team
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>{% if title is defined %}{{ title }} | {% endif %}Symfony CZ</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <style>
+      .alert { right: 0; padding: 3px; position: absolute; top: 0; z-index: 100; }
+
+      #cart { max-height: 230px; overflow: auto; }
+
+      #cart-delimiter { height: 10px; }
+
+      .active { font-weight: bold; }
+    </style>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      {% for flash_type, flash_messages in app.session.flashBag.all %}
+        {% for flash_message in flash_messages %}
+          <div class="alert alert-{{ flash_type }}" role="alert">{{ flash_message }}</div>
+        {% endfor %}
+      {% endfor %}
+
+      {% block body %}{% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script>
+      $('.alert').delay(1000).fadeOut('slow');
+    </script>
+  </body>
+</html>
+
+

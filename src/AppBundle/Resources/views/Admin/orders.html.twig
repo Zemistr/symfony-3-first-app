@@ -1,0 +1,80 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% set title = 'Přehled objednávek' %}
+
+{% block body %}
+  <div class="row">
+    <div class="col-xs-12 text-right">
+      <a href="{{ path('logout') }}">Odhlásit</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 id="cart-section">{{ title }}</h2>
+
+      <a href="{{ path('admin') }}" class="{{ status == 'all' ? 'active' : '' }}">Vše</a> |
+      <a href="{{ path('admin', {'status': 0}) }}" class="{{ status == 0 and status != 'all' ? 'active' : '' }}">Nezpracováno</a> |
+      <a href="{{ path('admin', {'status': 1}) }}" class="{{ status == 1 ? 'active' : '' }}">Ve výrobě</a> |
+      <a href="{{ path('admin', {'status': 2}) }}" class="{{ status == 2 ? 'active' : '' }}">Hotovo</a> |
+      <a href="{{ path('admin', {'status': -1}) }}" class="{{ status == -1 ? 'active' : '' }}">Zrušeno</a>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Kontakt</th>
+            <th>Poznámka</th>
+            <th>Cena</th>
+            <th>Produkty</th>
+            <th>Stav</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>
+                {{ order.name }}<br>
+                {{ order.email }}
+              </td>
+              <td>{{ order.note|nl2br }}</td>
+              <td>{{ order.cart.total }} Kč</td>
+              <td>
+                {% for sku, item in order.cart.items %}
+                  {% for size_key, size in item.sizes %}
+                    {{ size.quantity }} x {{ item.title }} - {{ size.title }}<br>
+                  {% endfor %}
+                {% endfor %}
+              </td>
+              <td>
+                {% set text = 'Nezpracováno' %}
+                {% set class = 'danger' %}
+
+                {% if order.status == -1 %}
+                  {% set text = 'Zrušeno' %}
+                  {% set class = 'default' %}
+                {% elseif order.status == 1 %}
+                  {% set text = 'Ve výrobě' %}
+                  {% set class = 'info' %}
+                {% elseif order.status == 2 %}
+                  {% set text = 'Hotovo' %}
+                  {% set class = 'success' %}
+                {% endif %}
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-{{ class }} btn-sm dropdown-toggle" data-toggle="dropdown">{{ text }} <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><a href="{{ path('change_status', {'id': order.id, 'status': status, 'new_status': 0}) }}"><span class="text-danger">Nezpracováno</span></a></li>
+                    <li><a href="{{ path('change_status', {'id': order.id, 'status': status, 'new_status': 1}) }}"><span class="text-info">Ve výrobě</span></a></li>
+                    <li><a href="{{ path('change_status', {'id': order.id, 'status': status, 'new_status': 2}) }}"><span class="text-success">Hotovo</span></a></li>
+                    <li><a href="{{ path('change_status', {'id': order.id, 'status': status, 'new_status': -1}) }}"><span class="text-default">Zrušeno</span></a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% set title = 'Košík' %}
+
+{% block body %}
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 id="cart-section">{{ title }}</h2>
+
+      <div id="cart">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Název</th>
+              <th>Velikost</th>
+              <th>Cena</th>
+              <th>Smazat</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sku, item in app.session.get('cart').items %}
+              {% for size_key, size in item.sizes %}
+                <tr>
+                  <td>{{ item.title }}</td>
+                  <td>{{ size.title }}</td>
+                  <td>{{ size.quantity }} * {{ item.price }} Kč = <strong>{{ item.price * size.quantity }} Kč</strong></td>
+                  <td><a href="{{ path('remove_from_cart', {'size': size_key, 'sku': sku}) }}"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>
+                </tr>
+              {% endfor %}
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" id="cart-delimiter"></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><strong>Celkem</strong></td>
+              <td colspan="2"><strong>{{ app.session.get('cart').total }} Kč</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <a href="{{ path('catalog') }}" class="btn btn-primary" role="button">Zpět na produkty</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <br>
+      <div class="well">Tričko Vám bude předáno na dalším Symfony srazu kde zároveň dojde i k platbě v hotovosti. :)</div>
+
+      {{ form(form) }}
+    </div>
+  </div>
+{% endblock %}

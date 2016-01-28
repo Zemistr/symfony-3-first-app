@@ -1,0 +1,23 @@
+parameters:
+    sizes:
+        xs: 'XS'
+        s: 'S'
+        m: 'M'
+        l: 'L'
+        xl: 'XL'
+        xxl: 'XXL'
+
+services:
+    app.service.order_service:
+        class: AppBundle\Service\OrderService
+        arguments: ["@doctrine.orm.default_entity_manager", "@swiftmailer.mailer.default", "@session", "@twig", "%sizes%"]
+
+    app.factory.form_factory:
+        class: AppBundle\Factory\FormFactory
+        autowire: true
+
+    app.form.product_form_type:
+        class: AppBundle\Form\ProductFormType
+        arguments: [ "%sizes%" ]
+        tags:
+            - { name: form.type }
