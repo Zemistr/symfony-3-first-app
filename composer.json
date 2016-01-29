@@ -1,8 +1,8 @@
 {
-  "name": "symfony/framework-standard-edition",
+  "name": "zemistr/symfony-3-first-app",
   "license": "MIT",
   "type": "project",
-  "description": "The \"Symfony Standard Edition\" distribution",
+  "description": "#symfonycz4 - Demo first app (e-shop)",
   "autoload": {
     "psr-4": {
       "": "src/"
