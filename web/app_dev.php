@@ -18,8 +18,8 @@ if (
 	)
 	&& @$_SERVER['HTTP_HOST'] != 'server.local'
 ) {
-//	header('HTTP/1.0 403 Forbidden');
-//	exit('You are not allowed to access this file. Check ' . basename(__FILE__) . ' for more information.');
+	header('HTTP/1.0 403 Forbidden');
+	exit('You are not allowed to access this file. Check ' . basename(__FILE__) . ' for more information.');
 }
 
 /**
