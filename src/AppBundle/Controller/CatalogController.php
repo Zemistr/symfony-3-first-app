@@ -19,8 +19,8 @@ class CatalogController extends Controller {
 		$form_factory = $this->get('app.factory.form_factory');
 		$order_service = $this->get('app.service.order_service');
 
-		$female_form = $form_factory->createAndHandle('female', ProductFormType::class, new CartItemEntity('female', 'Dámské tričko', 490));
-		$male_form = $form_factory->createAndHandle('male', ProductFormType::class, new CartItemEntity('male', 'Pánské tričko', 490));
+		$female_form = $form_factory->createAndHandle('female', ProductFormType::class, new CartItemEntity('female', 'Dámské tričko', 499));
+		$male_form = $form_factory->createAndHandle('male', ProductFormType::class, new CartItemEntity('male', 'Pánské tričko', 499));
 
 		/** @var FormInterface $form */
 		foreach ([$female_form, $male_form] as $form) {
